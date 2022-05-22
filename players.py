@@ -1,13 +1,18 @@
 import random
 class Players():
-    pp_x = 0
-    def __init__(self, pic_pl, name, player_id):
+
+    def __init__(self, pic_pl, name, player_id, pp_x, pp_y):
         self.pic_pl = pic_pl
         self.name = name
         self.player_id = player_id
-        self.pp_x = 30
-        self.pp_y = 50
-        print("PLAY")
+        self.pp_x = pp_x
+        self.pp_y = pp_y
+        print("Player -->", self.id())
+
+    def positionXY(self, posX = 30, posY = 50):
+        self.posX = posX
+        self.posY = posY
+        return (self.posX, self.posY)
 
     def positionX(self, posX = 30):
         self.posX = self.pp_x

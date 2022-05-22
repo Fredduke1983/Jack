@@ -18,13 +18,19 @@ def run():
 
 
     pl1 = pygame.image.load("image/lovepik.png")
-    player1 = Players(pl1, "Fred", 1)
+
+
+    player1 = Players(pl1, "Fred", 1, 30, 50)
+    player2 = Players(pl1, "Anna", 2, 35, 50)
+    player3 = Players(pl1, "Mido", 3, 40, 50)
+
 
     new_cards = []
     for n in range (18):
         card = Cards(n)
         new_cards.append(card)
 
+    index_card = 0
     pos1 = 10
     click = 1
     mouse_click_count = 0
@@ -39,9 +45,7 @@ def run():
     while True:
         clock.tick(FPS)
 
-
         for event in pygame.event.get():
-
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
@@ -51,24 +55,9 @@ def run():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and mouse_click_count == 0:
                     screen.fill((0, 0, 0))
-
                     isPlayer1 = True
                     mouse_click_count += 1
-                    but_x, but_y = pygame.mouse.get_pos()
-
-                    if but_x > 50 and but_x < 150 and but_y > 450 and but_y < 550:
-                        random_cubic = random.randint(0, 5)
-                        if pl_x > 600:
-
-                            pl_x, pl_y = player1.move(0, random_cubic+1)
-                            pr
-                            int("plx2 = ", pl_x)
-                            print("ply2 = ", pl_y)
-                        else:
-
-                            pl_x, pl_y = player1.move(random_cubic+1, 0)
-                            print("plx1 = ", pl_x)
-                            print("ply1 = ", pl_y)
+                    random_cubic = random.randint(0, 5)
                     click = 1
 
         if click == 1:
@@ -81,16 +70,12 @@ def run():
                 screen.blit(pic,(x, y))
                 pygame.draw.rect(screen, (50, 200, 150), (x, y, 100, 100), 2)
 
-
             screen.blit(cubic[random_cubic], (50, 450))
-            if pl_x > 600:
-                pl_x = pl_x - (random_cubic+1)*100
-                for coun in range(0, (random_cubic+1)*100):
-                    pl_x += 2
-                    if pl_x > 629:
-                        pl_x, pl_y = player1.move(-1, int((player1.positionX()-pl_x)/100))
-                        break
-            screen.blit(pl1, (pl_x-60, pl_y))
+
+            index_card += random_cubic + 1
+            new_x, new_y = new_cards[index_card].coordinate()
+            pl_x, pl_y = player1.positionXY(new_x, new_y)
+            screen.blit(pl1, (pl_x, pl_y))
 
             x = 50
             y = 50

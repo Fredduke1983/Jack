@@ -13,10 +13,10 @@ y0 = 50
 for i in range (1,8):
     coord[i] = [x0, y0]
     x0 += 100
-for i in range (8,12):
+for i in range (8,10):
     coord[i] = [x0, y0]
     y0 += 100
-for i in range (12,20):
+for i in range (10,20):
     coord[i] = [x0, y0]
     x0 -= 100
 
