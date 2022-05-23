@@ -17,6 +17,8 @@ def run():
     cubic = [cubic1,cubic2,cubic3,cubic4,cubic5,cubic6]
 
 
+
+
     pl1 = pygame.image.load("image/lovepik.png")
     pl2 = pygame.image.load("image/lovepik2.png")
     pl3 = pygame.image.load("image/lovepik3.png")
@@ -25,6 +27,12 @@ def run():
     player1 = Players(pl1, "Fred", 1, 30, 50)
     player2 = Players(pl2, "Anna", 2, 35, 50)
     player3 = Players(pl3, "Mido", 3, 40, 50)
+    fontik = pygame.font.SysFont('arial', 32)
+    name_player1 = fontik.render(str(player1.getName()), True, (110, 110, 10))
+    name_player2 = fontik.render(str(player2.getName()), True, (110, 110, 10))
+    name_player3 = fontik.render(str(player3.getName()), True, (110, 110, 10))
+
+
     step = 1
     pl1_x, pl1_y = player1.getPositionXY()
     pl2_x, pl2_y = player2.getPositionXY()
@@ -73,6 +81,7 @@ def run():
             screen.blit(cubic[random_cubic], (50, 450))
 
             if step == 1:
+                name_player = name_player1
                 index_card_pl1 += random_cubic + 1
                 new_x, new_y = new_cards[index_card_pl1].coordinate()
                 pl1_x, pl1_y = player1.setPositionXY(new_x, new_y)
@@ -80,6 +89,7 @@ def run():
                 print("index_card_pl1 : ", index_card_pl1, " pl_x, pl_y : ", pl1_x, pl1_y, "step = ", step)
 
             if step == 2:
+                name_player = name_player2
                 index_card_pl2 += random_cubic + 1
                 new_x, new_y = new_cards[index_card_pl2].coordinate()
                 pl2_x, pl2_y = player2.setPositionXY(new_x, new_y)
@@ -88,6 +98,7 @@ def run():
 
 
             if step == 3:
+                name_player = name_player3
                 index_card_pl3 += random_cubic + 1
                 new_x, new_y = new_cards[index_card_pl3].coordinate()
                 pl3_x, pl3_y = player3.setPositionXY(new_x, new_y)
@@ -96,6 +107,8 @@ def run():
             screen.blit(pl1, (pl1_x, pl1_y))
             screen.blit(pl2, (pl2_x + 5, pl2_y))
             screen.blit(pl3, (pl3_x + 10, pl3_y))
+
+            screen.blit(name_player, (20, 10))
 
         if step == 3:
             step = 0

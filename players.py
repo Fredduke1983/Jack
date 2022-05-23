@@ -17,5 +17,8 @@ class Players():
         self.posY = posY
         return (self.posX, self.posY)
 
+    def getName(self):
+        return self.name
+
     def id(self):
         return self.player_id
