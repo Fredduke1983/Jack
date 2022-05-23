@@ -18,11 +18,17 @@ def run():
 
 
     pl1 = pygame.image.load("image/lovepik.png")
+    pl2 = pygame.image.load("image/lovepik2.png")
+    pl3 = pygame.image.load("image/lovepik3.png")
 
 
     player1 = Players(pl1, "Fred", 1, 30, 50)
-    player2 = Players(pl1, "Anna", 2, 35, 50)
-    player3 = Players(pl1, "Mido", 3, 40, 50)
+    player2 = Players(pl2, "Anna", 2, 35, 50)
+    player3 = Players(pl3, "Mido", 3, 40, 50)
+    step = 1
+    pl1_x, pl1_y = player1.getPositionXY()
+    pl2_x, pl2_y = player2.getPositionXY()
+    pl3_x, pl3_y = player3.getPositionXY()
 
 
     new_cards = []
@@ -30,18 +36,13 @@ def run():
         card = Cards(n)
         new_cards.append(card)
 
-    index_card = 0
-    pos1 = 10
-    click = 1
-    mouse_click_count = 0
+    index_card_pl1 = index_card_pl2 = index_card_pl3 = 0
+    mouse_click_count = 1
     random_cubic = 0
 
     FPS = 10
-
     clock = pygame.time.Clock()
-    x, y = 50, 50
-    pl_x, pl_y = 30, 50
-    start = True
+
     while True:
         clock.tick(FPS)
 
@@ -55,14 +56,13 @@ def run():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and mouse_click_count == 0:
                     screen.fill((0, 0, 0))
-                    isPlayer1 = True
-                    mouse_click_count += 1
-                    random_cubic = random.randint(0, 5)
-                    click = 1
 
-        if click == 1:
-            click = 0
-            col = 1
+                    mouse_click_count += 1
+                    step += 1
+                    random_cubic = random.randint(0, 5)
+
+        if mouse_click_count == 1:
+            mouse_click_count = 0
 
             for i in range(1, len(new_cards)):
                 x, y = new_cards[i].coordinate()
@@ -72,14 +72,33 @@ def run():
 
             screen.blit(cubic[random_cubic], (50, 450))
 
-            index_card += random_cubic + 1
-            new_x, new_y = new_cards[index_card].coordinate()
-            pl_x, pl_y = player1.positionXY(new_x, new_y)
-            screen.blit(pl1, (pl_x, pl_y))
+            if step == 1:
+                index_card_pl1 += random_cubic + 1
+                new_x, new_y = new_cards[index_card_pl1].coordinate()
+                pl1_x, pl1_y = player1.setPositionXY(new_x, new_y)
 
-            x = 50
-            y = 50
+                print("index_card_pl1 : ", index_card_pl1, " pl_x, pl_y : ", pl1_x, pl1_y, "step = ", step)
 
+            if step == 2:
+                index_card_pl2 += random_cubic + 1
+                new_x, new_y = new_cards[index_card_pl2].coordinate()
+                pl2_x, pl2_y = player2.setPositionXY(new_x, new_y)
+
+                print("index_card_pl2 : ", index_card_pl2, " pl_x, pl_y : ", pl2_x, pl2_y, "step = ", step)
+
+
+            if step == 3:
+                index_card_pl3 += random_cubic + 1
+                new_x, new_y = new_cards[index_card_pl3].coordinate()
+                pl3_x, pl3_y = player3.setPositionXY(new_x, new_y)
+
+                print("index_card_pl3 : ", index_card_pl3, " pl_x, pl_y : ", pl3_x, pl3_y, "step = ", step)
+            screen.blit(pl1, (pl1_x, pl1_y))
+            screen.blit(pl2, (pl2_x + 5, pl2_y))
+            screen.blit(pl3, (pl3_x + 10, pl3_y))
+
+        if step == 3:
+            step = 0
         mouse_click_count = 0
         pygame.display.update()
 run()
