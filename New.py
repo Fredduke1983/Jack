@@ -19,7 +19,7 @@ def run():
 
 
 
-    pl1 = pygame.image.load("image/lovepik.png")
+    pl1 = pygame.image.load("image/love commitpik.png")
     pl2 = pygame.image.load("image/lovepik2.png")
     pl3 = pygame.image.load("image/lovepik3.png")
 
