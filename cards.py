@@ -8,17 +8,23 @@ pics = [pic1, pic2, pic3]
 coord = {}
 
 
-x0 = 70
+x0 = 100
 y0 = 100
-for i in range (1,8):
+for i in range (1,10):
     coord[i] = [x0, y0]
     x0 += 100
-for i in range (8,10):
+for i in range (10,12):
     coord[i] = [x0, y0]
     y0 += 100
-for i in range (10,20):
+for i in range (12,22):
     coord[i] = [x0, y0]
     x0 -= 100
+for i in range (22,24):
+    coord[i] = [x0, y0]
+    y0 += 100
+for i in range (24,35):
+    coord[i] = [x0, y0]
+    x0 += 100
 
 class Cards:
 
