@@ -8,8 +8,8 @@ pics = [pic1, pic2, pic3]
 coord = {}
 
 
-x0 = 50
-y0 = 50
+x0 = 70
+y0 = 100
 for i in range (1,8):
     coord[i] = [x0, y0]
     x0 += 100

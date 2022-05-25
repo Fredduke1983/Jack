@@ -6,7 +6,7 @@ from cards import Cards
 
 def run():
     pygame.init()
-    screen = pygame.display.set_mode((900,600))
+    screen = pygame.display.set_mode((1300,720), pygame.RESIZABLE)
 
     cubic1 = pygame.image.load("image/cubic_1.jpg")
     cubic2 = pygame.image.load("image/cubic_2.jpg")
@@ -70,7 +70,7 @@ def run():
                 screen.blit(pic,(x, y))
                 pygame.draw.rect(screen, (50, 200, 150), (x, y, 100, 100), 2)
 
-            screen.blit(cubic[random_cubic], (50, 450))
+            screen.blit(cubic[random_cubic], (50, 50))
 
             if step == 1:
                 index_card_pl1 += random_cubic + 1
