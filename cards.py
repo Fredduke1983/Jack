@@ -29,7 +29,7 @@ for i in range (24,35):
 class Cards:
 
     def __init__(self, id):
-        self.stat = True
+        self.state = True
         self.pictures = pics[random.randint(0, 2)]
         self.id = id
 
@@ -37,12 +37,14 @@ class Cards:
         return coord[self.id]
 
     def stat(self):
-        self.stat = False
+        self.state = False
 
     def card(self):
-        if self.stat == True:
+        if self.state == True:
+            print(self.state)
             return pics[0]
         else:
+            print(self.state)
             return self.pictures
 
 

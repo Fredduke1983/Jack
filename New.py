@@ -57,6 +57,7 @@ def run():
     while True:
         clock.tick(FPS)
 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -72,6 +73,7 @@ def run():
                         sys.exit()
                     if click_button_x > 850 and click_button_x < 900 and click_button_y > 20 and click_button_y < 70:
                         screen.fill((0, 0, 0))
+
                         mouse_click_count += 1
                         step += 1
                         random_cubic = random.randint(0, 5)
@@ -79,10 +81,10 @@ def run():
         if mouse_click_count == 1:
             mouse_click_count = 0
 
+
             for i in range(1, len(new_cards)):
                 x, y = new_cards[i].coordinate()
                 pic = new_cards[i].card()
-                new_cards[0].stat()
                 screen.blit(pic,(x, y))
                 pygame.draw.rect(screen, (50, 200, 150), (x, y, 100, 100), 2)
 
@@ -97,19 +99,26 @@ def run():
                 index_card_pl1 += random_cubic + 1
                 new_x, new_y = new_cards[index_card_pl1].coordinate()
                 pl1_x, pl1_y = player1.setPositionXY(new_x, new_y)
+                new_cards[index_card_pl1].stat()
+                screen.blit(new_cards[index_card_pl1].card(), (new_x, new_y))
                 screen.blit(name_player2, (50, 10))
 
             if step == 2:
                 index_card_pl2 += random_cubic + 1
                 new_x, new_y = new_cards[index_card_pl2].coordinate()
                 pl2_x, pl2_y = player2.setPositionXY(new_x, new_y)
+                new_cards[index_card_pl2].stat()
+                screen.blit(new_cards[index_card_pl2].card(), (new_x, new_y))
                 screen.blit(name_player3, (50, 10))
 
             if step == 3:
                 index_card_pl3 += random_cubic + 1
                 new_x, new_y = new_cards[index_card_pl3].coordinate()
                 pl3_x, pl3_y = player3.setPositionXY(new_x, new_y)
+                new_cards[index_card_pl3].stat()
+                screen.blit(new_cards[index_card_pl3].card(), (new_x, new_y))
                 screen.blit(name_player1, (50, 10))
+
 
             screen.blit(exit, (1100, 20))
             screen.blit(name_player1_1, (pl1_x + 30, pl1_y - 17))
