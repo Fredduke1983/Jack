@@ -6,8 +6,11 @@ from cards import Cards
 
 def run():
     pygame.init()
-    screen = pygame.display.set_mode((1300,720), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((800,600))
 
+    pic = pygame.image.load("image/images.jpg")
+    pic2 = pic3 = pic4 = pygame.image.load("image/trap.png")
+    pic5 = pic6 = pic7= pic8 = pygame.image.load("image/empty.png")
     cubic1 = pygame.image.load("image/cubic_1.jpg")
     cubic2 = pygame.image.load("image/cubic_2.jpg")
     cubic3 = pygame.image.load("image/cubic_3.jpg")
@@ -18,45 +21,32 @@ def run():
 
 
     pl1 = pygame.image.load("image/lovepik.png")
-    pl2 = pygame.image.load("image/lovepik2.png")
-    pl3 = pygame.image.load("image/lovepik3.png")
+    player1 = Players(pl1, "Fred", 1)
 
+    print("Player #",player1.id())
+    print("Position Player X ->", player1.positionX())
+    print("Position Player Y ->", player1.positionY())
+    field = [pic, pic2, pic3, pic4, pic5, pic6, pic7, pic8]
 
-    player1 = Players(pl1, "Fred", 1, 0, 100)
-    player2 = Players(pl2, "Anna", 2, 5, 100)
-    player3 = Players(pl3, "Mido", 3, 10, 100)
-    step = 0
-    start = True
-
-    pl1_x, pl1_y = player1.getPositionXY()
-    pl2_x, pl2_y = player2.getPositionXY()
-    pl3_x, pl3_y = player3.getPositionXY()
-
-    fontik = pygame.font.SysFont('arial', 15)
-    name_player1 = fontik.render("Зараз ходить " + str(player1.getName()), True, (110, 110, 10))
-    name_player2 = fontik.render("Зараз ходить " + str(player2.getName()), True, (110, 110, 10))
-    name_player3 = fontik.render("Зараз ходить " + str(player3.getName()), True, (110, 110, 10))
-    switch_cubic = fontik.render("Натисни на кубик для ходу ->", True, (110, 110, 8))
-    name_player1_1 = fontik.render(str(player1.getName()), True, (110, 110, 7))
-    name_player2_2 = fontik.render(str(player2.getName()), True, (110, 110, 7))
-    name_player3_3 = fontik.render(str(player3.getName()), True, (110, 110, 7))
-
-    new_cards = []
-    for n in range (35):
-        card = Cards(n)
-        new_cards.append(card)
-
-    index_card_pl1 = index_card_pl2 = index_card_pl3 = 0
-    mouse_click_count = 1
+    pos1 = 10
+    click = 1
     random_cubic = 0
 
     FPS = 10
+    mouse_click_count = 0
     clock = pygame.time.Clock()
 
+    card = Cards(16)
+    print(card.coordinate())
+    x, y = 50, 50
+    pl_x, pl_y = 30, 50
+    start = True
     while True:
         clock.tick(FPS)
 
+
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
@@ -67,55 +57,60 @@ def run():
                 if event.button == 1 and mouse_click_count == 0:
                     screen.fill((0, 0, 0))
 
+                    isPlayer1 = True
                     mouse_click_count += 1
-                    step += 1
-                    random_cubic = random.randint(0, 5)
+                    but_x, but_y = pygame.mouse.get_pos()
 
-        if mouse_click_count == 1:
-            mouse_click_count = 0
+                    if but_x > 50 and but_x < 150 and but_y > 450 and but_y < 550:
+                        random_cubic = random.randint(0, 5)
+                        print(but_x, but_y, "   ", random_cubic+1)
 
-            for i in range(1, len(new_cards)):
-                x, y = new_cards[i].coordinate()
-                pic = new_cards[i].card()
-                screen.blit(pic,(x, y))
-                pygame.draw.rect(screen, (50, 200, 150), (x, y, 100, 100), 2)
+                        # pos1 += (random_cubic+1)*100
+                        if pl_x > 600:
 
-            screen.blit(cubic[random_cubic], (850, 20))
-            screen.blit(switch_cubic, (680, 35))
+                            pl_x, pl_y = player1.move(0, random_cubic+1)
+                            print("plx2 = ", pl_x)
+                            print("ply2 = ", pl_y)
+                        else:
 
-            if start:
-                screen.blit(name_player1, (50, 10))
-                start = False
+                            pl_x, pl_y = player1.move(random_cubic+1, 0)
+                            print("plx1 = ", pl_x)
+                            print("ply1 = ", pl_y)
+                    click = 1
 
-            if step == 1:
-                index_card_pl1 += random_cubic + 1
-                new_x, new_y = new_cards[index_card_pl1].coordinate()
-                pl1_x, pl1_y = player1.setPositionXY(new_x, new_y)
+        if click == 1:
+            click = 0
+            col = 1
+            for i in field:
 
-                screen.blit(name_player2, (50, 10))
+                if col < 6:
+                    screen.blit(i, (x, y))
+                    pygame.draw.rect(screen, (50, 50, 250), (x, y, 100, 100), 2)
+                    x += 100
+                    col += 1
+                else:
+                    screen.blit(i, (x, y))
+                    pygame.draw.rect(screen, (50, 50, 250), (x, y, 100, 100), 2)
+                    y += 100
 
-            if step == 2:
-                index_card_pl2 += random_cubic + 1
-                new_x, new_y = new_cards[index_card_pl2].coordinate()
-                pl2_x, pl2_y = player2.setPositionXY(new_x, new_y)
-                screen.blit(name_player3, (50, 10))
+            screen.blit(cubic[random_cubic], (50, 450))
+            if pl_x > 600:
+                pl_x = pl_x - (random_cubic+1)*100
+                for coun in range(0, (random_cubic+1)*100):
+                    # print(coun)
+                    pl_x += 2
+                    if pl_x > 629:
+                        print(' Player position X --',player1.positionX(), ' pl_x = ',pl_x)
+                        pl_x, pl_y = player1.move(-1, int((player1.positionX()-pl_x)/100))
+                        print(' Player position X --', player1.positionX(), ' pl_x = ', pl_x)
+                        print(' pl_y ----', pl_y)
+                        break
+            print(' pl_y --', pl_y, ' pl_x = ', pl_x)
+            screen.blit(pl1, (pl_x-60, pl_y))
 
+            x = 50
+            y = 50
 
-            if step == 3:
-                index_card_pl3 += random_cubic + 1
-                new_x, new_y = new_cards[index_card_pl3].coordinate()
-                pl3_x, pl3_y = player3.setPositionXY(new_x, new_y)
-                screen.blit(name_player1, (50, 10))
-
-            screen.blit(name_player1_1, (pl1_x + 30, pl1_y - 17))
-            screen.blit(name_player2_2, (pl2_x + 30, pl2_y - 30))
-            screen.blit(name_player3_3, (pl3_x + 40, pl3_y - 41))
-            screen.blit(pl1, (pl1_x, pl1_y))
-            screen.blit(pl2, (pl2_x + 6, pl2_y))
-            screen.blit(pl3, (pl3_x + 12, pl3_y))
-
-        if step == 3:
-            step = 0
         mouse_click_count = 0
         pygame.display.update()
 run()
