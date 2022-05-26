@@ -1,10 +1,10 @@
 import pygame
 import random
 
-pic1 = pygame.image.load("image/images.jpg")
-pic2 = pygame.image.load("image/trap.png")
-pic3 = pygame.image.load("image/empty.png")
-pics = [pic1, pic2, pic3]
+pic_castle = pygame.image.load("image/images.jpg")
+pic_trap = pygame.image.load("image/trap.png")
+pic_empty = pygame.image.load("image/empty.png")
+pics = [pic_empty, pic_castle, pic_trap]
 coord = {}
 
 
@@ -29,12 +29,21 @@ for i in range (24,35):
 class Cards:
 
     def __init__(self, id):
+        self.stat = True
         self.pictures = pics[random.randint(0, 2)]
         self.id = id
+
     def coordinate(self):
         return coord[self.id]
+
+    def stat(self):
+        self.stat = False
+
     def card(self):
-        return self.pictures
+        if self.stat == True:
+            return pics[0]
+        else:
+            return self.pictures
 
 
 

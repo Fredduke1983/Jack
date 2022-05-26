@@ -82,6 +82,7 @@ def run():
             for i in range(1, len(new_cards)):
                 x, y = new_cards[i].coordinate()
                 pic = new_cards[i].card()
+                new_cards[0].stat()
                 screen.blit(pic,(x, y))
                 pygame.draw.rect(screen, (50, 200, 150), (x, y, 100, 100), 2)
 
